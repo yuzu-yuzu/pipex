@@ -6,7 +6,7 @@
 #    By: hjiang <hjiang@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/14 19:35:45 by hjiang            #+#    #+#              #
-#    Updated: 2025/04/15 16:47:08 by hjiang           ###   ########.fr        #
+#    Updated: 2025/04/15 18:37:55 by hjiang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,6 @@ $(NAME):  $(OBJ)
 
 clean:
 		rm -f $(OBJ)
-		rm -f outfile
 
 fclean: clean
 		rm -f $(NAME)

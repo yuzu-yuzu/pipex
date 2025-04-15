@@ -6,11 +6,21 @@
 /*   By: hjiang <hjiang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:38:55 by hjiang            #+#    #+#             */
-/*   Updated: 2025/04/15 17:13:44 by hjiang           ###   ########.fr       */
+/*   Updated: 2025/04/15 19:25:03 by hjiang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+static void	free_paths(char **paths)
+{
+	int	i;
+
+	i = 0;
+	while (paths[i++])
+		free(paths[i]);
+	free(paths);
+}
 
 char	*get_path(char *cmd, char **envp)
 {
@@ -24,20 +34,19 @@ char	*get_path(char *cmd, char **envp)
 		i++;
 	paths = ft_split(envp[i] + 5, ':');
 	i = 0;
-	while (paths)
+	while (paths[i++])
 	{
 		tmp = ft_strjoin(paths[i], "/");
 		path = ft_strjoin(tmp, cmd);
 		free(tmp);
 		if (access(path, F_OK | X_OK) == 0)
+		{
+			free_paths(paths);
 			return (path);
+		}
 		free(path);
-		i++;
 	}
-	i = 0;
-	while (paths[i++])
-		free(paths[i]);
-	free(paths);
+	free_paths(paths);
 	return (NULL);
 }
 

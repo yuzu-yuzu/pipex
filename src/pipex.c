@@ -6,7 +6,7 @@
 /*   By: hjiang <hjiang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 14:28:02 by hjiang            #+#    #+#             */
-/*   Updated: 2025/04/15 18:28:00 by hjiang           ###   ########.fr       */
+/*   Updated: 2025/04/15 19:04:18 by hjiang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,18 @@ void	child2(char **av, int fd[2], char **envp, pid_t pid2)
 static void	create_child1(char **av, int fd[2], char **envp)
 {
 	pid_t	pid1;
+	int		filein;
 
+	filein = open(av[1], O_RDONLY, 0777);
+	if (filein == -1)
+	{
+		write(2, "Error: Open filein failed\n", 26);
+		close(fd[0]);
+		close(fd[1]);
+		exit(EXIT_FAILURE);
+	}
+	else
+		close(filein);
 	pid1 = fork();
 	if (pid1 == -1)
 		write(2, "Error: fork pid1 failed\n", 23);
@@ -69,7 +80,18 @@ static void	create_child1(char **av, int fd[2], char **envp)
 static void	create_child2(char **av, int fd[2], char **envp)
 {
 	pid_t	pid2;
+	int		fileout;
 
+	fileout = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	if (fileout == -1)
+	{
+		write(2, "Error: Open filein failed\n", 26);
+		close(fd[0]);
+		close(fd[1]);
+		exit(EXIT_FAILURE);
+	}
+	else
+		close(fileout);
 	pid2 = fork();
 	if (pid2 == -1)
 		write(2, "Error: fork pid2 failed\n", 23);
@@ -83,6 +105,11 @@ int	main(int ac, char **av, char **envp)
 	if (ac != 5)
 	{
 		write(2, "Error: argument's number\n", 25);
+		exit(EXIT_FAILURE);
+	}
+	if (av[2][0] == '\0' || av[3][0] == '\0')
+	{
+		write(2, "Error: void argument\n", 21);
 		exit(EXIT_FAILURE);
 	}
 	if (pipe(fd) == -1)
