@@ -6,7 +6,7 @@
 /*   By: hjiang <hjiang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 15:30:19 by hjiang            #+#    #+#             */
-/*   Updated: 2025/04/16 13:05:48 by hjiang           ###   ########.fr       */
+/*   Updated: 2025/04/16 15:53:53 by hjiang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,11 @@ void	free_cmd(char **cmd, char *path)
 	int	i;
 
 	i = 0;
-	while (cmd[i++])
+	while (cmd[i] != NULL)
+	{
 		free(cmd[i]);
+		i++;
+	}
 	free(cmd);
 	free(path);
 }

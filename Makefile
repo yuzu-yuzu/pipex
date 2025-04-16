@@ -6,12 +6,12 @@
 #    By: hjiang <hjiang@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/14 19:35:45 by hjiang            #+#    #+#              #
-#    Updated: 2025/04/16 13:05:51 by hjiang           ###   ########.fr        #
+#    Updated: 2025/04/16 15:37:32 by hjiang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= pipex
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror -g 
 CC		= cc
 
 #FILES#

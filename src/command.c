@@ -6,7 +6,7 @@
 /*   By: hjiang <hjiang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:38:55 by hjiang            #+#    #+#             */
-/*   Updated: 2025/04/16 13:05:44 by hjiang           ###   ########.fr       */
+/*   Updated: 2025/04/16 15:53:59 by hjiang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,11 @@ static void	free_paths(char **paths)
 	int	i;
 
 	i = 0;
-	while (paths[i++])
+	while (paths[i] != NULL)
+	{
 		free(paths[i]);
+		i++;
+	}
 	free(paths);
 }
 
@@ -34,7 +37,7 @@ char	*get_path(char *cmd, char **envp)
 		i++;
 	paths = ft_split(envp[i] + 5, ':');
 	i = 0;
-	while (paths[i++])
+	while (paths[i])
 	{
 		tmp = ft_strjoin(paths[i], "/");
 		path = ft_strjoin(tmp, cmd);
@@ -45,6 +48,7 @@ char	*get_path(char *cmd, char **envp)
 			return (path);
 		}
 		free(path);
+		i++;
 	}
 	free_paths(paths);
 	return (NULL);
@@ -71,4 +75,5 @@ void	exec_cmd(char *av, char **envp)
 		write(2, "Error: execve failed\n", 21);
 		exit(EXIT_FAILURE);
 	}
+	free_cmd(cmd, path);
 }
