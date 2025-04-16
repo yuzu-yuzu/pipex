@@ -6,7 +6,7 @@
 /*   By: hjiang <hjiang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 14:27:53 by hjiang            #+#    #+#             */
-/*   Updated: 2025/04/15 18:45:11 by hjiang           ###   ########.fr       */
+/*   Updated: 2025/04/16 13:14:30 by hjiang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-void	child1(char **av, int fd[2], char **envp, pid_t pid1);
-void	child2(char **av, int fd[2], char **envp, pid_t pid2);
+void	child1(char **av, int fd[2], char **envp, int filein);
+void	child2(char **av, int fd[2], char **envp, int fileout);
 
 void	exec_cmd(char *av, char **envp);
 char	*get_path(char *cmd, char **envp);
