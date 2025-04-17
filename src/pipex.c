@@ -6,7 +6,7 @@
 /*   By: hjiang <hjiang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 14:28:02 by hjiang            #+#    #+#             */
-/*   Updated: 2025/04/16 19:01:28 by hjiang           ###   ########.fr       */
+/*   Updated: 2025/04/17 14:47:30 by hjiang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	child1(char **av, int fd[2], char **envp, int filein)
 {
 	dup2(filein, STDIN_FILENO);
 	dup2(fd[1], STDOUT_FILENO);
+	close(filein);
 	close(fd[0]);
 	close(fd[1]);
 	exec_cmd(av[2], envp);
@@ -25,6 +26,7 @@ void	child2(char **av, int fd[2], char **envp, int fileout)
 {
 	dup2(fd[0], STDIN_FILENO);
 	dup2(fileout, STDOUT_FILENO);
+	close(fileout);
 	close(fd[0]);
 	close(fd[1]);
 	exec_cmd(av[3], envp);
@@ -39,6 +41,7 @@ static void	create_child1(char **av, int fd[2], char **envp)
 	if (filein == -1)
 	{
 		write(2, "Error: Open filein failed\n", 26);
+		close(filein);
 		close(fd[0]);
 		close(fd[1]);
 		exit(EXIT_FAILURE);
@@ -48,6 +51,8 @@ static void	create_child1(char **av, int fd[2], char **envp)
 		write(2, "Error: fork pid1 failed\n", 23);
 	if (pid1 == 0)
 		child1(av, fd, envp, filein);
+	else
+		close(filein);
 }
 
 static void	create_child2(char **av, int fd[2], char **envp)
@@ -59,6 +64,7 @@ static void	create_child2(char **av, int fd[2], char **envp)
 	if (fileout == -1)
 	{
 		write(2, "Error: Open filein failed\n", 26);
+		close(fileout);
 		close(fd[0]);
 		close(fd[1]);
 		exit(EXIT_FAILURE);
@@ -68,6 +74,8 @@ static void	create_child2(char **av, int fd[2], char **envp)
 		write(2, "Error: fork pid2 failed\n", 23);
 	if (pid2 == 0)
 		child2(av, fd, envp, fileout);
+	else
+		close(fileout);
 }
 
 int	main(int ac, char **av, char **envp)
