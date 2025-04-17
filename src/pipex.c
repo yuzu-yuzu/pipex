@@ -6,7 +6,7 @@
 /*   By: hjiang <hjiang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 14:28:02 by hjiang            #+#    #+#             */
-/*   Updated: 2025/04/16 15:53:56 by hjiang           ###   ########.fr       */
+/*   Updated: 2025/04/16 19:01:28 by hjiang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	create_child1(char **av, int fd[2], char **envp)
 	pid_t	pid1;
 	int		filein;
 
-	filein = open(av[1], O_RDONLY, 0777);
+	filein = open(av[1], O_RDONLY, 0000);
 	if (filein == -1)
 	{
 		write(2, "Error: Open filein failed\n", 26);

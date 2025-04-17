@@ -6,7 +6,7 @@
 /*   By: hjiang <hjiang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:38:55 by hjiang            #+#    #+#             */
-/*   Updated: 2025/04/16 15:53:59 by hjiang           ###   ########.fr       */
+/*   Updated: 2025/04/17 14:09:33 by hjiang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,10 @@ void	exec_cmd(char *av, char **envp)
 
 	i = 0;
 	cmd = ft_split(av, ' ');
-	path = get_path(cmd[0], envp);
+	if (access(cmd[0], F_OK | X_OK) == 0)
+		path = cmd[0];
+	else
+		path = get_path(cmd[0], envp);
 	if (!path)
 	{
 		free_cmd(cmd, path);
