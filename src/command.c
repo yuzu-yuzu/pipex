@@ -6,7 +6,7 @@
 /*   By: hjiang <hjiang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:38:55 by hjiang            #+#    #+#             */
-/*   Updated: 2025/04/18 16:55:56 by hjiang           ###   ########.fr       */
+/*   Updated: 2025/04/18 17:00:33 by hjiang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ static char	*find_path(char **paths, char *cmd)
 char	*get_path(char *cmd, char **envp)
 {
 	char	**paths;
-	char	*path;
 	int		i;
 
 	i = 0;
