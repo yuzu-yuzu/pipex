@@ -6,7 +6,7 @@
 /*   By: hjiang <hjiang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:38:55 by hjiang            #+#    #+#             */
-/*   Updated: 2025/04/17 14:09:33 by hjiang           ###   ########.fr       */
+/*   Updated: 2025/04/18 16:18:40 by hjiang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,14 @@ static void	free_paths(char **paths)
 	free(paths);
 }
 
-char	*get_path(char *cmd, char **envp)
+static char	*find_path(char **paths, char *cmd)
 {
-	char	**paths;
 	char	*path;
-	int		i;
 	char	*tmp;
+	int		i;
 
 	i = 0;
-	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5) != 0)
-		i++;
-	paths = ft_split(envp[i] + 5, ':');
-	i = 0;
-	while (paths[i])
+	while (paths && paths[i])
 	{
 		tmp = ft_strjoin(paths[i], "/");
 		path = ft_strjoin(tmp, cmd);
@@ -50,6 +45,24 @@ char	*get_path(char *cmd, char **envp)
 		free(path);
 		i++;
 	}
+	return (NULL);
+}
+
+char	*get_path(char *cmd, char **envp)
+{
+	char	**paths;
+	char	*path;
+	int		i;
+	char	*tmp;
+
+	i = 0;
+	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5) != 0)
+		i++;
+	if (!envp[i])
+		return (NULL);
+	paths = ft_split(envp[i] + 5, ':');
+	if (!paths)
+		return (NULL);
 	free_paths(paths);
 	return (NULL);
 }
