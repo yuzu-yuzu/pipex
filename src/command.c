@@ -6,7 +6,7 @@
 /*   By: hjiang <hjiang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:38:55 by hjiang            #+#    #+#             */
-/*   Updated: 2025/04/18 16:18:40 by hjiang           ###   ########.fr       */
+/*   Updated: 2025/04/18 16:33:41 by hjiang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ char	*get_path(char *cmd, char **envp)
 	char	**paths;
 	char	*path;
 	int		i;
-	char	*tmp;
 
 	i = 0;
 	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5) != 0)
@@ -63,6 +62,7 @@ char	*get_path(char *cmd, char **envp)
 	paths = ft_split(envp[i] + 5, ':');
 	if (!paths)
 		return (NULL);
+	path = find_path(paths, cmd);
 	free_paths(paths);
 	return (NULL);
 }
